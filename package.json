@@ -1,0 +1,27 @@
+{
+  "name": "time-logger",
+  "version": "1.0.0",
+  "description": "Manager of your time",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-web": "parcel web/index.html",
+    "start-parser": "python3 parser/main.py"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexy247/Time-Logger.git"
+  },
+  "keywords": [
+    "charts",
+    "parser"
+  ],
+  "author": "alena ogloblina",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexy247/Time-Logger/issues"
+  },
+  "homepage": "https://github.com/alexy247/Time-Logger#readme",
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  }
+}

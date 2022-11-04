@@ -26,7 +26,7 @@ def parser():
                     last_date = list(dirty_data.keys())[-1]
                     dirty_data[last_date].append(line)
 
-        with open(os.path.join(output_dir, FILE_NAME), "w", encoding="utf-8") as result_file:
+        with open(os.path.join(output_dir, FILE_NAME_JSON), "w", encoding="utf-8") as result_file:
             result_file.write(json.dumps(dirty_data))
 
 if __name__ == "__main__":
