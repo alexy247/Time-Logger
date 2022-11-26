@@ -1,5 +1,6 @@
 import os
 import json
+from pathlib import Path
 
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 dir_name = os.path.join(parent_dir, "data", "dirty")
@@ -26,6 +27,7 @@ def parser():
                     last_date = list(dirty_data.keys())[-1]
                     dirty_data[last_date].append(line)
 
+        Path(output_dir).mkdir(exist_ok=True)
         with open(os.path.join(output_dir, FILE_NAME_JSON), "w", encoding="utf-8") as result_file:
             result_file.write(json.dumps(dirty_data))
 
