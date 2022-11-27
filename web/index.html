@@ -7,16 +7,24 @@
     <title>time logger</title>
 </head>
 <body>
-    <h1>Hello, lets go to manage your time!</h1>
-    <div class="js-data-place">
-        ... data's place ...
-    </div>
+    <h1 class="title">Hello, lets go to manage your time!</h1>
 
-    <div>
+    <div class="canvas-wrapper">
         <canvas class="js-chart-place"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
+
+    <style>
+        .title {
+            text-align: center;
+            }
+
+        .canvas-wrapper {
+            width: 80%;
+            margin: 0 auto;
+            }
+    </style>
 </body>
 </html>
