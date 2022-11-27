@@ -1,14 +1,5 @@
+import numpy as np
 import time
-import os
-import json
-from pathlib import Path
-
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-dir_name = os.path.join(parent_dir, "data", "parsed")
-output_dir = os.path.join(parent_dir, "data", "stat")
-
-DATA_FILE_NAME = "data.json"
-RESULT_FILE_NAME = "day_stat.json"
 
 def fill_empty_days(day, keys, hours_by_day):
   sec_in_one_day = 60 * 60 * 24
@@ -60,14 +51,42 @@ def get_hours_by_day_with_empty(data):
 
   return hours_by_day
 
-def day_stat():
-    with open(os.path.join(dir_name, DATA_FILE_NAME), "r", encoding="utf-8") as file:
-        content = file.read()
-        data = json.loads(content)
+def get_avarage_day_time_per_day(day_stat):
+  hours_by_day = []
 
-        Path(output_dir).mkdir(exist_ok=True)
-        with open(os.path.join(output_dir, RESULT_FILE_NAME), "w", encoding="utf-8") as result_file:
-          result_file.write(json.dumps(get_hours_by_day_with_empty(data)))
+  keys = list(day_stat.keys())
 
-if __name__ == "__main__":
-    day_stat()
+  for day in keys:
+
+    hours, mins = day_stat[day].split('.')
+
+    hours_num = int(hours) + int(mins) / 60
+    if hours_num != 0:
+      hours_by_day.append(hours_num)
+
+  result = np.array(hours_by_day).mean()
+  return round(result, 2)
+
+
+def get_avarage_day_time_per_week(day_stat):
+  hours_by_week = {}
+
+  keys = list(day_stat.keys())
+
+  for day in keys:
+
+    day_time_obj = time.strptime(day, "%d.%m.%y")
+
+    week_name = str(day_time_obj.tm_yday // 7) + "_" + str(
+      day_time_obj.tm_year)
+
+    hours, mins = day_stat[day].split('.')
+    hours_num = int(hours) + int(mins) / 60
+
+    if week_name in hours_by_week:
+      hours_by_week[week_name] += hours_num
+    else:
+      hours_by_week[week_name] = hours_num
+
+  result = np.array(list(hours_by_week.values())).mean()
+  return round(result / 5, 2)

@@ -10,7 +10,6 @@ const requestHeaders = {
 
 const request = new Request('http://localhost:3000/day_stat', requestHeaders);
 
-const dataPlaceElement = document.querySelector('.js-data-place');
 const chartPlaceElement = document.querySelector('.js-chart-place');
 
 fetch(request)
@@ -22,29 +21,41 @@ fetch(request)
     }
   })
   .then((response) => {
-    dataPlaceElement.innerHTML = JSON.stringify(response);
-
-    console.log(typeof response);
+    average_per_day = response.average_per_day;
+    average_per_week = response.average_per_week;
+    data_stat = response.data_stat;
 
     let labels = [];
     let data = [];
-    for (line in response) {
+    let average_per_day_list = [];
+    let average_per_week_list = [];
+    for (line in data_stat) {
         labels.push(line);
-        time = response[line].split('.');
+        time = data_stat[line].split('.');
         hours = new Number(time[0]);
         minutes = new Number(time[1]);
         data.push(hours + new Number((minutes / 60).toFixed(2)));
+        average_per_day_list.push(average_per_day);
+        average_per_week_list.push(average_per_week);
     }
 
     new Chart(chartPlaceElement, {
-      type: 'bar',
       data: {
-        labels: labels,
         datasets: [{
-          label: 'working hours',
+          type: 'bar',
+          label: 'Working hours',
           data: data,
           borderWidth: 1
-        }]
+      }, {
+          type: 'line',
+          label: 'Avarage of day per day',
+          data: average_per_day_list,
+      }, {
+        type: 'line',
+        label: 'Avarage of day per week',
+        data: average_per_week_list,
+      }],
+        labels: labels
       },
       options: {
         scales: {

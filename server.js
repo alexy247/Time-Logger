@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/day_stat', function (req, res) {
-    fs.readFile('./data/stat/day_stat.json', function(err, data) {
+    fs.readFile('./data/stat/stat.json', function(err, data) {
         if (err){
             throw err;
         }
